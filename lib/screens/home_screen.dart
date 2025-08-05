@@ -124,9 +124,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Live Gold Price Ticker
             Container(
@@ -187,32 +186,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
             
-            // Wallet Cards
-            WalletCards(wallets: walletProvider.wallets),
-            
-            const SizedBox(height: 16),
-            
-            // Quick Actions
-            QuickActions(),
-            
-            const SizedBox(height: 16),
-            
-            // Special Offer Banners
-            OfferBanners(),
-            
-            const SizedBox(height: 16),
-            
-            // Product Catalog
-            ProductCatalog(products: productProvider.products),
-            
-            const SizedBox(height: 16),
-            
-            // Transaction History
-            TransactionHistory(transactions: transactionProvider.transactions),
-            
-            const SizedBox(height: 80), // Extra space for bottom navigation
+            // Main content in Expanded widget to prevent overflow
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16),
+                      
+                      // Wallet Cards
+                      WalletCards(wallets: walletProvider.wallets),
+                      
+                      const SizedBox(height: 16),
+                      
+                      // Quick Actions
+                      QuickActions(),
+                      
+                      const SizedBox(height: 16),
+                      
+                      // Special Offer Banners
+                      OfferBanners(),
+                      
+                      const SizedBox(height: 16),
+                      
+                      // Product Catalog
+                      ProductCatalog(products: productProvider.products),
+                      
+                      const SizedBox(height: 16),
+                      
+                      // Transaction History
+                      TransactionHistory(transactions: transactionProvider.transactions),
+                      
+                      // Extra space at bottom to ensure content isn't hidden behind nav bar
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

@@ -39,7 +39,7 @@ class TransactionHistory extends StatelessWidget {
           height: 300,
           child: ListView.builder(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             itemCount: transactions.length,
             itemBuilder: (context, index) {
               final transaction = transactions[index];

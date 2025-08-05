@@ -36,7 +36,7 @@ class _WalletCardsState extends State<WalletCards> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 180,
+          height: 220, // Further increased height to prevent overflow
           child: PageView.builder(
             controller: _pageController,
             itemCount: widget.wallets.length,

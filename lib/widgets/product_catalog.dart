@@ -53,9 +53,10 @@ class _ProductCatalogState extends State<ProductCatalog> with TickerProviderStat
           ],
         ),
         SizedBox(
-          height: 200,
+          height: 280, // Further increased height
           child: TabBarView(
             controller: _tabController,
+            physics: const ClampingScrollPhysics(), // Allow scrolling
             children: [
               _buildProductGrid(widget.products),
               _buildProductGrid(widget.products.where((product) => product.name.contains('Ring')).toList()),
@@ -70,7 +71,7 @@ class _ProductCatalogState extends State<ProductCatalog> with TickerProviderStat
   Widget _buildProductGrid(List<Product> products) {
     return GridView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
