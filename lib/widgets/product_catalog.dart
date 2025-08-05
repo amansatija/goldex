@@ -53,7 +53,7 @@ class _ProductCatalogState extends State<ProductCatalog> with TickerProviderStat
           ],
         ),
         SizedBox(
-          height: 280, // Further increased height
+          height: 300, // Fixed height but large enough to show multiple products
           child: TabBarView(
             controller: _tabController,
             physics: const ClampingScrollPhysics(), // Allow scrolling
@@ -77,65 +77,129 @@ class _ProductCatalogState extends State<ProductCatalog> with TickerProviderStat
         crossAxisCount: 2,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
-        childAspectRatio: 0.8,
+        childAspectRatio: 0.7, // Taller cards
       ),
       itemCount: products.length,
       itemBuilder: (context, index) {
         final product = products[index];
         return Container(
           decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey.withOpacity(0.2)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: const Offset(0, 1),
+              ),
+            ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 100,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Carat badge
+              Align(
+                alignment: Alignment.topLeft,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: product.caratColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(4),
+                    color: product.caratColor,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
                   ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.diamond,
-                      size: 40,
-                      color: Colors.grey,
+                  child: Text(
+                    product.carat,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  product.name,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+              ),
+              // Product image
+              Expanded(
+                child: Center(
+                  child: Icon(
+                    _getIconForProduct(product.name),
+                    size: 20,
+                    color: product.caratColor,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  '${product.weight} g | ${product.carat}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+              ),
+              // Product details
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.name,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${product.weight} g • ${product.carat}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '₹${product.price.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFD4AF37),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF5F5F5),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Text(
+                            'View',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFFD4AF37),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  '₹${product.price.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFD4AF37),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },
     );
+  }
+  
+  IconData _getIconForProduct(String productName) {
+    if (productName.contains('Ring')) {
+      return Icons.balance;
+    } else if (productName.contains('Coin')) {
+      return Icons.circle;
+    } else if (productName.contains('Chain')) {
+      return Icons.local_fire_department;
+    } else if (productName.contains('Earrings')) {
+      return Icons.view_in_ar;
+    } else {
+      return Icons.diamond;
+    }
   }
 }

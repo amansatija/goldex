@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:marquee/marquee.dart';
 import '../providers/auth_provider.dart';
 import '../providers/wallet_provider.dart';
 import '../providers/product_provider.dart';
@@ -133,57 +134,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Colors.grey[100]
                   : Colors.grey[800],
               padding: const EdgeInsets.symmetric(vertical: 4),
-              child: const SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    SizedBox(width: 16),
-                    Text(
-                      '24K: ₹5,247.80/g',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(width: 4),
-                    Icon(Icons.arrow_drop_up, color: Colors.green, size: 16),
-                    Text(
-                      '↑0.8%',
-                      style: TextStyle(fontSize: 12, color: Colors.green),
-                    ),
-                    SizedBox(width: 16),
-                    Text(
-                      '22K: ₹4,810.50/g',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(width: 4),
-                    Icon(Icons.arrow_drop_up, color: Colors.green, size: 16),
-                    Text(
-                      '↑0.7%',
-                      style: TextStyle(fontSize: 12, color: Colors.green),
-                    ),
-                    SizedBox(width: 16),
-                    Text(
-                      '18K: ₹3,935.85/g',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(width: 4),
-                    Icon(Icons.arrow_drop_up, color: Colors.green, size: 16),
-                    Text(
-                      '↑0.6%',
-                      style: TextStyle(fontSize: 12, color: Colors.green),
-                    ),
-                    SizedBox(width: 16),
-                    Text(
-                      '24K: ₹5,247.80/g',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(width: 4),
-                    Icon(Icons.arrow_drop_up, color: Colors.green, size: 16),
-                    Text(
-                      '↑0.8%',
-                      style: TextStyle(fontSize: 12, color: Colors.green),
-                    ),
-                    SizedBox(width: 16),
-                  ],
-                ),
+              height: 24,
+              child: Marquee(
+                text: '18K: ₹3,935.85/g   ↑0.6%   |   24K: ₹5,247.80/g   ↑0.8%   |   22K: ₹4,810.50/g   ↑0.7%   |   18K: ₹3,935.85/g   ↑0.6%   |   ',
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                scrollAxis: Axis.horizontal,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                blankSpace: 40.0,
+                velocity: 30.0,
+                pauseAfterRound: const Duration(seconds: 1),
+                startPadding: 20.0,
+                accelerationDuration: const Duration(seconds: 1),
+                accelerationCurve: Curves.linear,
+                decelerationDuration: const Duration(milliseconds: 500),
+                decelerationCurve: Curves.easeOut,
               ),
             ),
             
